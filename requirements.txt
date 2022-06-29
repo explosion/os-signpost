@@ -1,0 +1,3 @@
+cython>=0.25
+# dev
+pytest>=5.2.0
