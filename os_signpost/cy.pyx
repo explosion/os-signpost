@@ -31,9 +31,8 @@ cdef class OSLog:
 
         return interval_end
 
-
-@contextlib.contextmanager
-def signpost_interval(log: OSLog, begin_msg: str, end_msg: str):
-    interval_end = log.signpost_interval(begin_msg)
-    yield
-    interval_end(end_msg)
+    @contextlib.contextmanager
+    def use_signpost_interval(self, begin_msg: str, end_msg: str):
+        interval_end = self.signpost_interval(begin_msg)
+        yield
+        interval_end(end_msg)
