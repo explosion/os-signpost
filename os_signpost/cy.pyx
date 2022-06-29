@@ -12,7 +12,7 @@ class _Category(Enum):
     DynamicStackTracing = "DynamicStackTracing"
 
 
-cdef class OSLog:
+cdef class SignPoster:
     Category = _Category
 
     def __init__(self, subsystem: str, category: Union[Category, str]):

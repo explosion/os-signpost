@@ -1,1 +1,1 @@
-from .cy import OSLog
+from .cy import SignPoster

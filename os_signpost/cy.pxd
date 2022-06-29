@@ -17,5 +17,5 @@ cdef extern from "signpost_wrap.h":
     void signpost_interval_begin(os_log_t log, os_signpost_id_t interval_id, const char* msg)
     void signpost_interval_end(os_log_t log, os_signpost_id_t interval_id, const char* msg)
 
-cdef class OSLog:
+cdef class SignPoster:
     cdef os_log_t os_log
