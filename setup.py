@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 from __future__ import print_function
 import os
-import sys
 
 from setuptools import Extension, setup, find_packages
 from Cython.Build import cythonize
 
 
 PACKAGES = find_packages()
-MOD_NAMES = ["macos_signpost.log"]
+MOD_NAMES = ["os_signpost.cy"]
 
 
 def clean(path):
@@ -23,14 +22,13 @@ def clean(path):
 def setup_package():
     extensions = [
         Extension(
-            "macos_signpost.signpost",
-            ["macos_signpost/signpost.pyx"],
-            libraries=["blas"],
+            "os_signpost.cy",
+            ["os_signpost/cy.pyx"],
         ),
     ]
 
     setup(
-        name="macos_signpost",
+        name="os-signpost",
         zip_safe=True,
         packages=PACKAGES,
         package_data={"": ["*.pyx", "*.pxd"]},
