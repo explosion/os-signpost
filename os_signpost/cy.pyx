@@ -22,6 +22,10 @@ cdef class OSLog:
         # os_log_create will always return a value
         self.os_log = os_log_create(subsystem.encode('UTF-8') , category.encode('UTF-8') )
 
+    def signpost_event_emit(self, msg: str):
+        cdef os_signpost_id_t sid = os_signpost_id_generate(self.os_log)
+        signpost_event_emit(self.os_log, sid, msg.encode("UTF-8"))
+
     def signpost_interval(self, msg) -> Callable[[str], None]:
         cdef os_signpost_id_t sid = os_signpost_id_generate(self.os_log)
         signpost_interval_begin(self.os_log, sid, msg.encode("UTF-8"))
