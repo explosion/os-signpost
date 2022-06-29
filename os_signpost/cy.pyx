@@ -22,21 +22,21 @@ cdef class OSLog:
         # os_log_create will always return a value
         self.os_log = os_log_create(subsystem.encode('UTF-8') , category.encode('UTF-8') )
 
-    def signpost_event_emit(self, msg: str):
+    def emit_event(self, msg: str):
         cdef os_signpost_id_t sid = os_signpost_id_generate(self.os_log)
         signpost_event_emit(self.os_log, sid, msg.encode("UTF-8"))
 
-    def signpost_interval(self, msg) -> Callable[[str], None]:
+    def begin_interval(self, msg) -> Callable[[str], None]:
         cdef os_signpost_id_t sid = os_signpost_id_generate(self.os_log)
         signpost_interval_begin(self.os_log, sid, msg.encode("UTF-8"))
 
-        def interval_end(msg):
+        def end_interval(msg):
             signpost_interval_end(self.os_log, sid, msg.encode("UTF-8"))
 
-        return interval_end
+        return end_interval
 
     @contextlib.contextmanager
-    def use_signpost_interval(self, begin_msg: str, end_msg: str):
-        interval_end = self.signpost_interval(begin_msg)
+    def use_interval(self, begin_msg: str, end_msg: str):
+        end_interval = self.begin_interval(begin_msg)
         yield
-        interval_end(end_msg)
+        end_interval(end_msg)
