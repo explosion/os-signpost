@@ -1,11 +1,24 @@
 # cython: infer_types=True
 # cython: cdivision=True
 
-from typing import Callable
+from typing import Callable, Union
 import contextlib
+from enum import Enum
+
+
+class _Category(Enum):
+    PointsOfInterest = "PointsOfInterest"
+    DynamicTracing = "DynamicTracing"
+    DynamicStackTracing = "DynamicStackTracing"
+
 
 cdef class OSLog:
-    def __init__(self, subsystem: str, category: str):
+    Category = _Category
+
+    def __init__(self, subsystem: str, category: Union[Category, str]):
+        if isinstance(category, self.Category):
+            category = category.value
+
         # os_log_create will always return a value
         self.os_log = os_log_create(subsystem.encode('UTF-8') , category.encode('UTF-8') )
 
