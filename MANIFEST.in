@@ -1,0 +1,5 @@
+recursive-include os_signpost *.pyx *.pxd *.h
+include LICENSE
+include README.md
+include pyproject.toml
+recursive-exclude os_signpost *.c
