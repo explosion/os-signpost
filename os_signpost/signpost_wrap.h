@@ -1,5 +1,4 @@
-#ifndef SIGNPOST_WRAP_H_
-#define SIGNPOST_WRAP_H_
+#pragma once
 
 #include <os/signpost.h>
 
@@ -11,5 +10,3 @@
 
 #define signpost_interval_end(log, interval_id, msg) \
   os_signpost_interval_end(log, interval_id, "python", "%s", msg)
-
-#endif // SIGNPOST_WRAP_H_
