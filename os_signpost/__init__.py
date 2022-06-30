@@ -1,1 +1,1 @@
-from .cy import SignPoster
+from .cy import Signposter
