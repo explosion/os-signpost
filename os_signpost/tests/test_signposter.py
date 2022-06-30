@@ -3,12 +3,12 @@
 
 import pytest
 
-from os_signpost import SignPoster
+from os_signpost import Signposter
 
 
 @pytest.fixture
 def signposter():
-    return SignPoster("ai.explosion.signposter", SignPoster.Category.DynamicTracing)
+    return Signposter("ai.explosion.signposter", Signposter.Category.DynamicTracing)
 
 
 def test_context_manager(signposter):
