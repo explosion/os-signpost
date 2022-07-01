@@ -17,6 +17,11 @@ def test_context_manager(signposter):
     ):
         ()
 
+    with signposter.use_interval(
+        "test_context_manager"
+    ):
+        ()
+
 
 def test_emit_event(signposter):
     signposter.emit_event("test_emit_event")
@@ -25,3 +30,6 @@ def test_emit_event(signposter):
 def test_interval(signposter):
     end_interval = signposter.begin_interval("end test_interval")
     end_interval("end test_interval")
+
+    end_interval = signposter.begin_interval("end test_interval")
+    end_interval()

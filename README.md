@@ -60,7 +60,8 @@ end_interval("end my task")
 
 Both the `begin_interval` method and the callback take a message.
 Instruments.app includes these messages in the visualization and allows you to
-categorize intervals by their messages.
+categorize intervals by their messages. When no message is specified for the
+interval end, the same message as the begin will be used.
 
 You can also use the `Signposter.use_interval` context manager in place of the
 callback approach:
@@ -70,7 +71,8 @@ with signposter.use_interval("begin my task", "end my task"):
     # The task for which you want to measure the duration.
 ```
 
-`use_interval` takes the begin and end messages as its arguments.
+`use_interval` takes the begin and end messages as its arguments. The end
+message is also optional for the context manager.
 
 ### Emitting an event
 

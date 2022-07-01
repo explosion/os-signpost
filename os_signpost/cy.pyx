@@ -1,7 +1,7 @@
 # cython: infer_types=True
 # cython: cdivision=True
 
-from typing import Callable, Union
+from typing import Callable, Optional, Union
 import contextlib
 from enum import Enum
 
@@ -26,17 +26,23 @@ cdef class Signposter:
         cdef os_signpost_id_t sid = os_signpost_id_generate(self.os_log)
         signpost_event_emit(self.os_log, sid, msg.encode("UTF-8"))
 
-    def begin_interval(self, msg) -> Callable[[str], None]:
+    def begin_interval(self, msg) -> Callable[[Optional[str]], None]:
         cdef os_signpost_id_t sid = os_signpost_id_generate(self.os_log)
         signpost_interval_begin(self.os_log, sid, msg.encode("UTF-8"))
 
-        def end_interval(msg):
-            signpost_interval_end(self.os_log, sid, msg.encode("UTF-8"))
+        def end_interval(end_msg=None):
+            if end_msg is None:
+                end_msg = msg
+
+            signpost_interval_end(self.os_log, sid, end_msg.encode("UTF-8"))
 
         return end_interval
 
     @contextlib.contextmanager
-    def use_interval(self, begin_msg: str, end_msg: str):
+    def use_interval(self, begin_msg: str, end_msg: Optional[str]=None):
+        if end_msg is None:
+            end_msg = begin_msg
+
         end_interval = self.begin_interval(begin_msg)
         yield
         end_interval(end_msg)
